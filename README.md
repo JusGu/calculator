@@ -4,7 +4,7 @@ A simple online calculator. Supports decimal points and keyboard input. Use dele
 ![Screenshot](https://i.imgur.com/3HzNF9G.png)
 
 ### Quick Start
-Check out the canvas [here!](https://jusgu.github.io/calculator)
+Check out the calculator [here!](https://jusgu.github.io/calculator)
 
 ### Tools Used
 - HTML
