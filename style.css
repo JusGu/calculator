@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
+
+html {
+    font-size: 15px;
+    font-family: 'Roboto Mono', monospace;
+  }
+
 body{
     display: flex;
     justify-content: center;
@@ -8,17 +15,23 @@ body{
     display: flex;
 }
 .buttons {
+    
     display: grid;
     grid-template-columns: repeat(4, 10vh);
-    grid-template-rows: repeat(5, 10vh);
+    grid-template-rows: repeat(6, 10vh);
     font-size: 4vh;
+    grid-gap: 1rem;
+    
 }
 
 .button {
+    font-family: 'Roboto Mono', monospace;
     display: flex;
     border: 2px solid black;
     justify-content: center;
     align-items: center;
+    border-radius: 25%;
+    font-size: 2.5vh;
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
      -khtml-user-select: none; /* Konqueror HTML */
@@ -28,23 +41,45 @@ body{
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.button img{
+    width: 3.5vh;
+    pointer-events: none
+}
+
+.operator {
+    font-size: 3vh;
+    font-weight: 100;
+}
 #equal {
-    grid-row-start: 4;
-    grid-row-end: 6;
+    grid-row-start: 5;
+    grid-row-end: 7;
     grid-column-start: 4;
+    border-radius: 3vh;
+    font-size: 3.5vh;
+}
+
+#decimal {
+    padding-bottom: 2vh;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 3vh;
 }
 
 .answer{
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: span 4;
     border: 2px solid black;
     height: 10vh;
     box-sizing: border-box;
-    width: 40vh;
-    max-width: 40vh;
+    width: 100%;
     overflow-x: hidden;
     display: flex;
     align-items: center;
     justify-content: right;
     font-size: 5vh;
-    gap: 0.5vh;
+    padding-right: 2vh;
+    border-radius: 3vh;
 }
+
 

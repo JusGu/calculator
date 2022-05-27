@@ -12,7 +12,7 @@ const equalsDisplay = document.querySelector('.equal-sign')
 
 // handleClick handles when a user clicks a button
 function handleClick(e){
-    if(e.target.className == "button"){
+    if(e.target.classList.contains("button")){
         let id = e.target.id
         if(!isNaN(id)){
             setNumWrapper(id);
@@ -24,12 +24,41 @@ function handleClick(e){
             clear();
         } else if (id == 'back'){
             handleBack();
+        } else if (id == 'decimal'){
+            handleDecimal();
         }
         console.log(n1, op, n2)
 
     };
 }
 
+// handleDecimal handles when a user clicks decimal
+function handleDecimal(){
+    if (n1 == null){
+        handleError();
+        n1 = setNum('.',n1);
+        console.log('1');
+        if(n1 == '0.'){
+            n1Display.innerhtml = '.';
+        } else {
+            n1Display.innerhtml = n1;
+        }
+        console.log(n1);
+    } else if (op == null){
+        n1 = setNum('.',n1);
+        n1Display.innerHTML =  n1;
+    } else if (n2 == null){
+        n2 = '0';
+        n2 = setNum('.',n2);
+        console.log(n2);
+        n2Display.innerHTML =  n2;
+    } else {
+        n2 = setNum('.',n2);
+        console.log(n2);
+        n2Display.innerHTML =  n2;
+    }
+
+}
 // handleBack handles deleting one element when the user clicks back
 function handleBack(){
     if (n1 == null){
@@ -46,7 +75,7 @@ function handleBack(){
     } else {
         let n2Array = n2.toString().split('');
         n2Array.pop();
-        n2 = n2Array.length ? Number(n2Array.join('')) : null;
+        n2 = n2Array.length ? n2Array.join('') : null;
         n2Display.innerHTML = n2;
     }
 }
@@ -54,15 +83,26 @@ function handleBack(){
 // handleOP handles the calculation and displaying when a user presses an operation button
 function handleOP(id) {
     n2 !== null ? handleEqual() : null; // if n2 already has a value calculate this value first, otherwise do nothing
+    n1 == null ? handleError() : null; // if n1 is null, set to 0;
     n1 == 'ERROR' ? handleError() : null; // handleError if there is an error
     op = id;
     opDisplay.innerHTML = '';
-    opDisplay.innerHTML = id;
+    console.log(id == '*');
+    if(id == '*'){
+        
+        opDisplay.innerHTML = '&times';
+    } else if (id == '/'){
+        opDisplay.innerHTML = '&divide';
+
+    } else {
+        opDisplay.innerHTML = id;
+    }
+    
 }
 
 // handleError sets n1 to 0 and displays it
 function handleError() {
-    n1 = 0;
+    n1 = '0';
     n1Display.innerHTML = n1;
 }
 
@@ -74,12 +114,27 @@ function setNumWrapper(id) {
 
 // setNum uses the current number n and appends id to the end of that number
 function setNum(id, n) {
-    let num = Number(id);
+    if(n == null){
+        console.log('HI');
+        if(id == -1){
+            return '0';
+        }
+        return id;
+    }
+    let num = id;
+    n = String(n);
+    n = n ? n : '0';
     if (num == -1) {
-        n *= 100;
+        console.log("HI")
+        n += '00';
     } else {
-        n *= 10;
         n += num;
+    }
+    while((n.charAt(0) == '0' && n.charAt(1) != '.')){
+        if(n.length == 1){
+            break;
+        }
+        n = n.substring(1);
     }
     return n;
 }
@@ -87,10 +142,17 @@ function setNum(id, n) {
 // handleEqual handles when a user clicks the equal button
 function handleEqual() {
     display = calc();
-    n1Display.innerHTML = n1Display.innerHTML = Math.round(display * 1000) / 1000;;
-    n1 = display;
+    if(display == 'ERROR'){
+        n1Display.innerHTML = 'ERROR';
+        n1 = null;
+
+    } else {
+        n1Display.innerHTML = Math.round(display * 1000) / 1000;
+        n1 = String(display);
+    }
     n2Display.innerHTML = '';
     opDisplay.innerHTML = '';
+
 }
 
 // clear clears the calculators display
@@ -119,6 +181,8 @@ function calc() {
 }
 
 function operate(operator, n1, n2){
+    n1 = Number(n1);
+    n2 = Number(n2);
     if(operator == '+'){
         return add(n1, n2);
     } else if (operator == '-'){
