@@ -4,11 +4,11 @@ let n1 = 0;
 let n2 = null;
 let op = null;
 let display = null;
-const answer = document.querySelector('.answer')
-const n1Display = document.querySelector('.n1')
-const n2Display = document.querySelector('.n2')
-const opDisplay = document.querySelector('.op')
-const equalsDisplay = document.querySelector('.equal-sign')
+const answer = document.querySelector('.answer');
+const n1Display = document.querySelector('.n1');
+const n2Display = document.querySelector('.n2');
+const equalsDisplay = document.querySelector('.equal-sign');
+const opDisplay = document.querySelector('.op');
 
 // handleClick handles when a user clicks a button
 function handleClick(e){
@@ -64,17 +64,20 @@ function handleBack(){
         return;
     }
     if(!op){
+        n1 = n1Display.innerHTML;
         let n1Array = n1.toString().split('');
         n1Array.pop();
         n1 = n1Array.length ? Number(n1Array.join('')) : null;
+        
         n1Display.innerHTML = n1;
     } else if (!n2){
         op = null;
         opDisplay.innerHTML = op;
     } else {
+        n2 = n2Display.innerHTML;
         let n2Array = n2.toString().split('');
         n2Array.pop();
-        n2 = n2Array.length ? n2Array.join('') : null;
+        n2 = n2Array.length ? Number(n2Array.join('')) : null;
         n2Display.innerHTML = n2;
     }
 }
@@ -114,7 +117,6 @@ function setNumWrapper(id) {
 // setNum uses the current number n and appends id to the end of that number
 function setNum(id, n) {
     if(n == null){
-        console.log('HI');
         if(id == -1){
             return '0';
         }
@@ -210,9 +212,33 @@ function divide(n1, n2){
     return n2 ? n1 / n2 : "ERROR";
 }
 
+// support key pressing
+function handleKey (e){
+    let k = e.key;
+    console.log(k);
+    if(!isNaN(k)){
+        const key_pressed = document.getElementById(`${(k)}`);
+        key_pressed.click();
+    } else if(k == 'Backspace' ){
+        const key_pressed = document.getElementById('back');
+        key_pressed.click();
+    } else if (k == 'Delete'){
+        const key_pressed = document.getElementById('clear');
+        key_pressed.click();
+    } else if (k == 'Enter'){
+        const key_pressed = document.getElementById('equal');
+        key_pressed.click();
+    } else if (['+','/','-','*'].includes(k)){
+        const key_pressed = document.getElementById(`${(k)}`);
+        key_pressed.click();
+    } else if (k == '.'){
+        const key_pressed = document.getElementById('decimal');
+        key_pressed.click();
+    } 
+}
 
 
-
+window.addEventListener('keydown', handleKey);
 window.addEventListener('click', handleClick);
 
 
