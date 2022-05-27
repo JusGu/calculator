@@ -13,6 +13,10 @@ const opDisplay = document.querySelector('.op');
 // handleClick handles when a user clicks a button
 function handleClick(e){
     if(e.target.classList.contains("button")){
+        e.target.focus()
+        setTimeout(function(){
+            e.target.blur();
+        }, 300);
         let id = e.target.id
         if(!isNaN(id)){
             setNumWrapper(id);
@@ -63,6 +67,12 @@ function handleBack(){
     if (n1 == null){
         return;
     }
+    if(String(n1).charAt(0) == '-' && String(n1).length == 2){
+        console.log("HI");
+        n1 = null;
+        n1Display.innerHTML = n1;
+        return;
+    }
     if(!op){
         n1 = n1Display.innerHTML;
         let n1Array = n1.toString().split('');
@@ -85,7 +95,7 @@ function handleBack(){
 // handleOP handles the calculation and displaying when a user presses an operation button
 function handleOP(id) {
     n2 !== null ? handleEqual() : null; // if n2 already has a value calculate this value first, otherwise do nothing
-    n1 == null ? handleError() : null; // if n1 is null, set to 0;
+    !n1 ? handleError() : null; // if n1 is null, set to 0;
     n1 == 'ERROR' ? handleError() : null; // handleError if there is an error
     op = id;
     opDisplay.innerHTML = '';
@@ -160,6 +170,10 @@ function handleEqual() {
 
 // clear clears the calculators display
 function clear() {
+    answer.classList.add("answerhover");
+    setTimeout(function(){
+        answer.classList.remove("answerhover");
+    }, 300);
     n1Display.innerHTML = '';
     n2Display.innerHTML = '';
     opDisplay.innerHTML = '';
