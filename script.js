@@ -43,7 +43,6 @@ function handleDecimal(){
         } else {
             n1Display.innerhtml = n1;
         }
-        console.log(n1);
     } else if (op == null){
         n1 = setNum('.',n1);
         n1Display.innerHTML =  n1;
@@ -125,10 +124,12 @@ function setNum(id, n) {
     n = String(n);
     n = n ? n : '0';
     if (num == -1) {
-        console.log("HI")
         n += '00';
     } else {
-        n += num;
+        if(num != '.' || !(n.includes('.'))){ // can't have multiple decimals
+            n += num;
+        }
+        
     }
     while((n.charAt(0) == '0' && n.charAt(1) != '.')){
         if(n.length == 1){
